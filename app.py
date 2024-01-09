@@ -14,7 +14,6 @@ es_model_id = '.elser_model_2_linux-x86_64'
 index_name = "elser_index_vb"
 pipeline_name = "elser-ingest-pipeline"
 
-
 def get_pdf_text(pdf_docs):
     text_content = ""
     for pdf in pdf_docs:
