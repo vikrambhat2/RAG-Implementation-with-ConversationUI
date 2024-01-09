@@ -1,7 +1,7 @@
 import streamlit as st
 from dotenv import load_dotenv
 import os
-from htmlTemplates import css, bot_template, user_template
+from htmlTemplate import css, bot_template, user_template
 from langchain_community.vectorstores.elasticsearch import ElasticsearchStore
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.memory import ConversationBufferMemory
