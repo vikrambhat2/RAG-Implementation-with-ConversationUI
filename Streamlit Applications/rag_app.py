@@ -15,7 +15,7 @@ from sentence_transformers import SentenceTransformer, util
 
 load_dotenv()
 es_model_id = '.elser_model_2_linux-x86_64'
-index_name = "elser_index_vb_test_3"
+index_name = "elser_index_vb_test_1"
 llm_model_id = "meta-llama/llama-2-13b-chat"
 wx_url = os.environ["WATSONX_URL"]
 wx_project_id = os.environ["WATSONX_Project_ID"]  
@@ -113,43 +113,54 @@ def get_conversation_chain(vector_store):
 
 def validate_answer_against_sources(response_answer, source_documents):
     model = SentenceTransformer('all-MiniLM-L6-v2')
-    similarity_threshold = 0.5  
+    similarity_threshold = 0.3  
     source_texts = [doc.page_content for doc in source_documents]
 
     answer_embedding = model.encode(response_answer, convert_to_tensor=True)
     source_embeddings = model.encode(source_texts, convert_to_tensor=True)
 
     cosine_scores = util.pytorch_cos_sim(answer_embedding, source_embeddings)
-
+    print(cosine_scores)
 
     if any(score.item() > similarity_threshold for score in cosine_scores[0]):
         return True  
 
     return False  
 
+
 def handle_userinput(user_question):
     response = st.session_state.conversation({'question': user_question})
-    st.session_state.chat_history = response['chat_history']
-    
-    for i, message in enumerate(st.session_state.chat_history):
-        print(i)
-        if i % 2 == 0:
-            st.write(user_template.replace(
-                "{{MSG}}", message.content), unsafe_allow_html=True)
-        else:
-            print(message.content)
-            st.write(bot_template.replace(
-                "{{MSG}}", message.content), unsafe_allow_html=True)
+    response_answer = response['answer']
 
+    print(response['answer'])
+    
+    is_valid_answer = validate_answer_against_sources(response['answer'], response['source_documents'])
+    if not is_valid_answer or not response['source_documents']:
+        response_answer = "Sorry I can not answer the question based on the given documents"
+
+
+
+    add_to_chat(user_question, response_answer )
+
+    for role, message in st.session_state.chat_history:
+        if role == "User":
+            st.write(user_template.replace(
+                "{{MSG}}", message), unsafe_allow_html=True)
+        else:
+            st.write(bot_template.replace(
+                "{{MSG}}", message), unsafe_allow_html=True)
+
+
+def add_to_chat(user_input, bot_response):
+    #st.session_state.chat_history.insert(0, ("User", user_input))
+    #st.session_state.chat_history.insert(0, ("Bot", bot_response))
+
+    st.session_state.chat_history.append(("User", user_input))
+    st.session_state.chat_history.append(("Bot", bot_response))
 
 
 def main():
     load_dotenv()
-
-    es_client = Elasticsearch(
-        os.environ["elastic_search_url"],
-        api_key=os.environ["elastic_search_api_key"]
-    )
 
     st.set_page_config(page_title="Chat with multiple PDFs",
                        page_icon=":books:")

@@ -38,8 +38,6 @@ css = '''
 .chat-message .message {
     width: 85%;
     padding: 0 1rem;
-    display: flex;
-    align-items: center;
     font-size: 1rem;
     font-family: 'Arial', sans-serif;
 }
