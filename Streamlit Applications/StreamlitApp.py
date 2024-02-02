@@ -125,7 +125,7 @@ def handle_userinput(user_question):
 def main():
     load_dotenv()
 
-    st.set_page_config(page_title="Chat with multiple PDFs",
+    st.set_page_config(page_title="Chat with your PDFs",
                        page_icon=":books:")
     st.write(css, unsafe_allow_html=True)
 
