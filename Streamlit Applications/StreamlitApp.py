@@ -2,23 +2,18 @@ import streamlit as st
 from dotenv import load_dotenv
 import os
 from htmlTemplate import css, bot_template, user_template
-from langchain_community.vectorstores.elasticsearch import ElasticsearchStore
+import PyPDF2
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.llms import LlamaCpp
+from langchain.embeddings import HuggingFaceEmbeddings 
+from langchain.vectorstores import FAISS
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
-import PyPDF2
-from ibm_watsonx_ai.metanames import GenTextParamsMetaNames as GenParams
-from langchain_community.llms import WatsonxLLM
-from elasticsearch import Elasticsearch
 from langchain.prompts import PromptTemplate
 from sentence_transformers import SentenceTransformer, util
 
+
 load_dotenv()
-es_model_id = '.elser_model_2_linux-x86_64'
-index_name = "elser_index_vb_test_3"
-llm_model_id = "meta-llama/llama-2-13b-chat"
-wx_url = os.environ["WATSONX_URL"]
-wx_project_id = os.environ["WATSONX_Project_ID"]  
 
 llmtemplate = """[INST]
 As an AI, provide accurate and relevant information based on the provided document. Your responses should adhere to the following guidelines:
@@ -63,52 +58,36 @@ def get_text_chunks(content, metadata):
     return split_docs
 
 
-def ingest_and_get_vector_store(split_docs):
-    vector_store = ElasticsearchStore(
-                    es_cloud_id= os.environ["elastic_search_cloud_id"],
-                    es_api_key=os.environ["elastic_search_api_key"],
-                    index_name=index_name,
-                    strategy=ElasticsearchStore.SparseVectorRetrievalStrategy(model_id=es_model_id)
-                    )
-    documents = vector_store.from_documents(
-        split_docs,
-        es_cloud_id= os.environ["elastic_search_cloud_id"],
-        es_api_key=os.environ["elastic_search_api_key"],
-        index_name=index_name,
-        strategy=ElasticsearchStore.SparseVectorRetrievalStrategy(model_id=es_model_id)
-    )
+def ingest_into_vectordb(split_docs):
+    embeddings = HuggingFaceEmbeddings(model_name='sentence-transformers/all-MiniLM-L6-v2', model_kwargs={'device': 'cpu'})
+    db = FAISS.from_documents(split_docs, embeddings)
 
-    return vector_store
+    DB_FAISS_PATH = 'vectorstore/db_faiss'
+    db.save_local(DB_FAISS_PATH)
+    return db
 
 
-def get_conversation_chain(vector_store):
-    parameters = {
-        GenParams.DECODING_METHOD: "sample",
-        GenParams.MAX_NEW_TOKENS: 150,
-        GenParams.MIN_NEW_TOKENS: 1,
-        GenParams.TEMPERATURE: 0.5,
-        GenParams.TOP_K: 50,
-        GenParams.TOP_P: 1,
-    }
+def get_conversation_chain(vectordb):
+    llama_llm = LlamaCpp(
+    model_path="llama-2-7b-chat.Q4_K_M.gguf",
+    temperature=0.75,
+    max_tokens=200,
+    top_p=1,
+    n_ctx=3000)
 
-    watsonx_llm = WatsonxLLM(
-        model_id=llm_model_id,
-        url=wx_url,
-        project_id=wx_project_id,
-        params=parameters,
-        apikey=os.environ["WATSONX_APIKEY"]
-    )
-    retriever = vector_store.as_retriever()
+    retriever = vectordb.as_retriever()
     CONDENSE_QUESTION_PROMPT = PromptTemplate.from_template(llmtemplate)
 
     memory = ConversationBufferMemory(
         memory_key='chat_history', return_messages=True, output_key='answer')
 
-    conversation_chain = ConversationalRetrievalChain.from_llm(llm=watsonx_llm,
+    conversation_chain = (ConversationalRetrievalChain.from_llm
+                          (llm=llama_llm,
                            retriever=retriever,
                            #condense_question_prompt=CONDENSE_QUESTION_PROMPT,
                            memory=memory,
-                           return_source_documents=True)
+                           return_source_documents=True))
+    print("Conversational Chain created for the LLM using the vector store")
     return conversation_chain
 
 def validate_answer_against_sources(response_answer, source_documents):
@@ -146,11 +125,6 @@ def handle_userinput(user_question):
 def main():
     load_dotenv()
 
-    es_client = Elasticsearch(
-        os.environ["elastic_search_url"],
-        api_key=os.environ["elastic_search_api_key"]
-    )
-
     st.set_page_config(page_title="Chat with multiple PDFs",
                        page_icon=":books:")
     st.write(css, unsafe_allow_html=True)
@@ -180,7 +154,7 @@ def main():
                 split_docs = get_text_chunks(content, metadata)
 
                 # create vector store
-                vectorstore = ingest_and_get_vector_store(split_docs)
+                vectorstore = ingest_into_vectordb(split_docs)
 
                 # create conversation chain
                 st.session_state.conversation = get_conversation_chain(
