@@ -6,3 +6,5 @@ sentence-transformers
 faiss-cpu
 huggingface-hub
 ollama
+unstructured[docx]
+
