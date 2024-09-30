@@ -4,10 +4,10 @@
 .DS_Store
 .DS_Store
 Streamlit Applications/llama-2-7b-chat.Q4_K_M.gguf
-Streamlit ApplÂ......3 ications/vectorstore/db_faiss/index.faiss
-Streamlit Applications/vectorstore/db_faiss/index.pkl
+Streamlit Applications/vectorstore/*
 RAGPROJECTS.code-workspace
 .DS_Store
 RAG Implementation Notebook/__pycache__/htmlTemplate.cpython-311.pyc
 RAG Implementation Notebook/vectorstore/db_faiss/index.faiss
 RAG Implementation Notebook/vectorstore/db_faiss/index.pkl
+.DS_Store
