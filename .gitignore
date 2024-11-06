@@ -11,3 +11,22 @@ RAG Implementation Notebook/__pycache__/htmlTemplate.cpython-311.pyc
 RAG Implementation Notebook/vectorstore/db_faiss/index.faiss
 RAG Implementation Notebook/vectorstore/db_faiss/index.pkl
 .DS_Store
+RAG Implementation Notebook/generate mock json.ipynb
+RAG Implementation Notebook/graphRag.ipynb
+RAG Implementation Notebook/Implement RAG using Llama 3.2 Re-ranking.ipynb
+RAG Implementation Notebook/mock_support_tickets.json
+RAG Implementation Notebook/CsvRAG/csvAgent.ipynb
+RAG Implementation Notebook/CsvRAG/csvRAG.ipynb
+RAG Implementation Notebook/CsvRAG/Sales_Data_Hierarchical.csv
+RAG Implementation Notebook/CsvRAG/Support_Tickets_Contextual.csv
+RAG Implementation Notebook/CsvRAG/Survey_Responses_Column_Based.csv
+RAG Implementation Notebook/CsvRAG/Transaction_Log_Row_Based.csv
+RAG Implementation Notebook/GraphRAG/faqs.json
+RAG Implementation Notebook/GraphRAG/GraphRAG_with_neo4js.ipynb
+RAG Implementation Notebook/GraphRAG/guides.json
+RAG Implementation Notebook/GraphRAG/rag_scoring_pipeline_function.py
+RAG Implementation Notebook/GraphRAG/support_tickets.json
+RAG Implementation Notebook/RedditRAG/redditApp.py
+RAG Implementation Notebook/RedditRAG/redditAppLLM.py
+RAG Implementation Notebook/RedditRAG/redditPostSummary.ipynb
+.DS_Store
