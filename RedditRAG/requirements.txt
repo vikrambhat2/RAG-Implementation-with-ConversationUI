@@ -1,0 +1,6 @@
+streamlit
+praw
+langchain
+faiss-cpu
+sentence-transformers
+python-dotenv
