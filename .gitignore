@@ -30,3 +30,9 @@ RAG Implementation Notebook/RedditRAG/redditApp.py
 RAG Implementation Notebook/RedditRAG/redditAppLLM.py
 RAG Implementation Notebook/RedditRAG/redditPostSummary.ipynb
 .DS_Store
+CsvRAG/.gradio/certificate.pem
+RAG Implementation Notebook/pandasai.log
+RAG Implementation Notebook/cache/cache_db_0.11.db
+RAG Implementation Notebook/cache/cache_db_0.11.db.wal
+RedditRAG/vectorstore/db_faiss/index.faiss
+RedditRAG/vectorstore/db_faiss/index.pkl
