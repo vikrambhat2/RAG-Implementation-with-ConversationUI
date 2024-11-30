@@ -1,4 +1,4 @@
 gradio==3.29.0
-langchain==0.0.190
+langchain==0.3.9
 langchain-ollama==0.3.0
 fpdf==1.7.2
