@@ -1,11 +1,11 @@
 import gradio as gr
-from langchain_community.llms import Ollama
+from langchain_ollama import OllamaLLM
 from langchain import PromptTemplate, LLMChain
 from fpdf import FPDF
 import tempfile
 
 # Initialize the Ollama LLM
-langchain_llm = Ollama(model="llama3.2")
+langchain_llm = OllamaLLM(model="llama3.2")
 
 # Define the prompt template
 prompt_template = """
