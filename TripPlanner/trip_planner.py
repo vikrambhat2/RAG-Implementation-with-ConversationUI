@@ -84,21 +84,21 @@ def interactive_trip_planner():
     with gr.Blocks() as interface:
         with gr.Row():
             with gr.Column(scale=1):
-                gr.Markdown("### AI-Powered Trip Planner")
+                gr.Markdown("### AI-RouteRover")
                 destination = gr.Textbox(label="City/Country Name", placeholder="Enter destination")
                 month = gr.Dropdown(choices=[
                     "January", "February", "March", "April", "May", "June",
                     "July", "August", "September", "October", "November", "December"
                 ], label="Month of Travel")
                 duration = gr.Slider(minimum=1, maximum=30, label="Number of Days", value=7)
-                num_people = gr.Dropdown(choices=["1", "2", "3-5", "6-10", "10+"], label="Number of People")
+                num_people = gr.Dropdown(choices=["1", "2", "3","4-6" "7-10", "10+"], label="Number of People")
                 holiday_type = gr.Dropdown(choices=[
                     "Any", "Party holiday", "Skiing and snowboarding", "Backpacking",
                     "Family holiday", "Beach holiday", "Music festivals",
                     "Adventure holidays", "City break", "Romantic holiday", "Cruise holiday"
                 ], label="Holiday Type", value="Any")
                 budget_type = gr.Dropdown(choices=[
-                    "Luxury Budget", "Mid-Range Budget", "Budget Travel",
+                    "Budget Travel", "Mid-Range Budget", "Luxury Budget",
                     "Backpacker Budget", "Family Budget"
                 ], label="Budget Type")
                 comments = gr.Textbox(label="Additional Comments", placeholder="Any specific requirements or preferences?")
