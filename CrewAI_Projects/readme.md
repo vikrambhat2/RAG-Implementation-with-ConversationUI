@@ -21,9 +21,6 @@ CrewAI_Projects/
 │   ├── web_crawler_agent.py
 │   ├── summarizer_agent.py
 │   └── report_generator_agent.py
-├── data/
-│   ├── data_file1.csv
-│   └── data_file2.json
 ├── main.py
 ├── .env
 ├── requirements.txt
