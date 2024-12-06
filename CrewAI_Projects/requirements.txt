@@ -1,0 +1,4 @@
+crewai
+requests
+python-dotenv  
+gradio
