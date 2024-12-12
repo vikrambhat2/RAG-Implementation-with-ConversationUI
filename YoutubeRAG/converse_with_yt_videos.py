@@ -6,7 +6,7 @@ from langchain.chains import create_retrieval_chain
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_community.document_loaders import YoutubeLoader
-from langchain_community.chat_models import ChatOllama
+from langchain_ollama import ChatOllama
 
 # Global variable to hold the vector database
 global_vector_db = None

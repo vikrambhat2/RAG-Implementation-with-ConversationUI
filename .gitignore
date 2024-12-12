@@ -36,3 +36,18 @@ RAG Implementation Notebook/cache/cache_db_0.11.db
 RAG Implementation Notebook/cache/cache_db_0.11.db.wal
 RedditRAG/vectorstore/db_faiss/index.faiss
 RedditRAG/vectorstore/db_faiss/index.pkl
+YoutubeRAG/vectorstore/db_faiss/index.faiss
+YoutubeRAG/vectorstore/db_faiss/index.pkl
+YoutubeRAG/.gradio/certificate.pem
+TripPlanner/.gradio/certificate.pem
+CrewAI_Projects/agents/__pycache__/web_crawler_agent.cpython-311.pyc
+CrewAI_Projects/agents/__pycache__/web_crawler_agent.cpython-310.pyc
+CrewAI_Projects/agents/__pycache__/summarizer_agent.cpython-311.pyc
+CrewAI_Projects/agents/__pycache__/summarizer_agent.cpython-310.pyc
+CrewAI_Projects/agents/__pycache__/report_generator_agent.cpython-311.pyc
+CrewAI_Projects/agents/__pycache__/report_generator_agent.cpython-310.pyc
+CrewAI_Projects/agents/__pycache__/__init__.cpython-311.pyc
+CrewAI_Projects/agents/__pycache__/__init__.cpython-310.pyc
+CrewAI_Projects/.gradio/certificate.pem
+.DS_Store
+.DS_Store

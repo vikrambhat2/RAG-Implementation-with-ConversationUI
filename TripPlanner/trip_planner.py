@@ -122,7 +122,7 @@ def interactive_trip_planner():
         clear_btn.click(clear_chat, outputs=chatbox)
         export_btn.click(export_to_pdf, outputs=None)
 
-    interface.launch()
+    interface.launch(share=True)
 
 # Launch the UI
 interactive_trip_planner()
