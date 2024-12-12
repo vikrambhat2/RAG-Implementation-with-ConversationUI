@@ -1,0 +1,6 @@
+gradio==5.5.0
+langchain==0.3.10
+langchain_huggingface==0.1.0
+langchain_community==0.3.8
+langchain_ollama==0.2.0
+faiss-cpu==1.7.4

@@ -73,7 +73,7 @@ def answer_question(question, chat_history):
 
         system_prompt = (
             "You are a video assistant tasked with answering questions based on the provided YouTube video context. "
-            "Use the given context to provide accurate, concise answers in three sentences. "
+            "Use the given context given by the video author to provide accurate, concise answers in three sentences. "
             "If the context does not contain the answer, say you are not sure "
             "Context: {context}"
         )
